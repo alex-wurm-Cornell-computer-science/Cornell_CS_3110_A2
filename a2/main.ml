@@ -1,6 +1,12 @@
 (** [play_game f] starts the adventure in file [f]. *)
 let play_game f =
   failwith "Unimplemented"
+  
+  (*print_string "Welcome to the Adventure Engine! Please select your Adventure.";
+  
+  let adventure_name = read_line in*)
+
+
 
 (** [main ()] prompts for the game to play, then starts it. *)
 let main () =

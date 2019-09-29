@@ -46,3 +46,8 @@ val go : Adventure.exit_name -> Adventure.t -> t -> result
  **********************************************************************)
 
 (* You are free to add more code here. *)
+
+(** [update_state old_state result] is the state that results from command go.
+If the command is [Illegal] then the previous state is returned. If the 
+comamnd is [Legal t] the new state [t] is returned. *)
+val update_state : t -> result -> t

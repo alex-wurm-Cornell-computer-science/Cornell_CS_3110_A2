@@ -172,7 +172,7 @@ let bad_json = {|{"univerzity" : "cornell", "people": []}|}
 (* Now when we try to parse it, we get an error.  Uncomment the line
    below to see it. *)
 
-(* let v = parse (Yojson.Basic.from_string bad_json) *)
+let v = parse (Yojson.Basic.from_string bad_json)
 
 (* The error is...
      Exception: Failure "Parsing error: Expected string, got null".
