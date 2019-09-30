@@ -3,23 +3,34 @@ open Yojson.Basic.Util
 
 type room_id = string
 type exit_name = string
+type relic_name = string
 exception UnknownRoom of room_id
 exception UnknownExit of exit_name
+exception UnknownRelic of relic_name
 
 type exit = {
   name : exit_name;
   room_id : room_id;
 }
 
+type relic = {
+  relic_name : relic_name;
+  points : int;
+}
+
 type room = {
   id : room_id;
   description : string;
   exits : exit list;
+  score : int;
+  loot : relic list;
 }
 
 type t = {
   rooms : room list;
   start_room : room_id;
+  relics : relic list;
+  treasure_room : room_id;
 }
 
 (** [exit_of_json j] is the record with fields name and room_id
@@ -29,17 +40,28 @@ let exit_of_json j = {
   room_id = j |> member "room id" |> to_string;
 }
 
-(** [room_of_json j] is the record with fields id, description, and exits
-that represents a [room] [j]. *)
+(** [relic_of_json j] is the record with fields [relic_name] and [points]
+that represents a [relic] [j]. *)
+let relic_of_json j = {
+  relic_name = j |> member "relic name" |> to_string;
+  points = j |> member "points" |> to_int;
+}
+
+(** [room_of_json j] is the record with fields [id], [description], [exits],
+[score], and [loot] that represents a [room] [j]. *)
 let room_of_json j = {
   id = j |> member "id" |> to_string;
   description = j |> member "description" |> to_string;
   exits = j |> member "exits" |> to_list |> List.map exit_of_json;
+  score = j |> member "score" |> to_int;
+  loot = j |> member "loot" |> to_list |> List.map relic_of_json;
 }
 
 let from_json json = {
   rooms = json |> member "rooms" |> to_list |> List.map room_of_json;
   start_room = json |> member "start room" |> to_string;
+  relics = json |> member "relics" |> to_list |> List.map relic_of_json;
+  treasure_room = json |> member "treasure room" |> to_string;
 }
 
 let start_room adv = 
@@ -52,7 +74,6 @@ let rec get_ids acc (room_list : room list) =
     | [] -> acc
     | h::t -> get_ids (h.id :: acc) t
 
-(** [room_ids adv] is the list of [ids] of the [rooms] in [adv]. *)
 let room_ids adv =
   get_ids [] adv.rooms
 
@@ -118,3 +139,22 @@ let next_room adv room ex =
 let next_rooms adv room =
   try adv.rooms |> List.find (fun {id} -> id = room) |> list_exit_ids with
     | Not_found -> raise (UnknownRoom room)
+
+(**Additional functions for A3 functionality added below: *)
+
+let treasure_room adv = adv.treasure_room
+
+(** [get_relics acc (relic_list : relic list)] is the list of [relic_names]
+of all of the [relics] in [relic_list]. *)
+let rec get_relics acc (relic_list : relic list) =
+  match relic_list with
+    | [] -> acc
+    | h::t -> get_relics (h.relic_name :: acc) t
+
+let relic_names adv = get_relics [] adv.relics
+
+(** [get_score room] is the [score] of [room]. *)
+let get_score room = room.score
+
+let room_score adv room = 
+  room_func adv room get_score

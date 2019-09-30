@@ -29,6 +29,7 @@ type object_phrase = string list
 type command = 
   | Go of object_phrase
   | Quit
+  | Score
 
 (** Raised when an empty command is parsed. *)
 exception Empty

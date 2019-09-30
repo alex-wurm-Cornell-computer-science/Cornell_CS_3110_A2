@@ -32,6 +32,13 @@
 					"name": "clock tower",
 					"room id": "tower"
 				}
+			],
+			"score": 0,
+			"loot": [
+				{
+					"relic name": "quarter card",
+					"points": 1
+				}
 			]
 		},
 		{
@@ -49,6 +56,13 @@
 				{
 					"name": "Ho Plaza",
 					"room id": "ho plaza"
+				}
+			],
+			"score": 5,
+			"loot": [
+				{
+					"relic name": "stethoscope",
+					"points": 10
 				}
 			]
 		},
@@ -72,13 +86,37 @@
 					"name": "higher",
 					"room id": "nirvana"
 				}
+			],
+			"score": 5,
+			"loot": [
+				{
+					"relic name": "lost wallet",
+					"points": 25
+				}
 			]
 		},
 		{
 			"id": "nirvana",
 			"description": "You have reached a higher level of existence.  There are no more words.",
-			"exits": []
+			"exits": [],
+			"score": 100,
+			"loot": []
 		}
 	],
-	"start room": "ho plaza"
+	"start room": "ho plaza",
+	"relics": [
+		{
+			"relic name": "stethoscope",
+			"points": 10
+		},
+		{
+			"relic name": "quarter card",
+			"points": 1
+		},
+		{
+			"relic name": "lost wallet",
+			"points": 25
+		}
+	],
+	"treasure room": "tower"
 }

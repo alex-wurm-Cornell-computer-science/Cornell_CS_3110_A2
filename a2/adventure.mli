@@ -23,11 +23,17 @@ type room_id = string
 (** The type of exit names. *)
 type exit_name = string
 
+(**The type of relic names. *)
+type relic_name = string
+
 (** Raised when an unknown room is encountered. *)
 exception UnknownRoom of room_id
 
 (** Raised when an unknown exit is encountered. *)
 exception UnknownExit of exit_name
+
+(** Raised when an unknown relic is encountered. *)
+exception UnknownRelic of relic_name
 
 (** [from_json j] is the adventure that [j] represents.
     Requires: [j] is a valid JSON adventure representation. *)
@@ -65,3 +71,15 @@ val next_rooms : t -> room_id -> room_id list
  **********************************************************************)
 
 (* You are free to add more code here. *)
+
+(** [treasure_room a] is the identifier of the treasure room in adventure
+[a]. *)
+val treasure_room : t -> room_id
+
+(** [relic)names a] is a set-like list of all of the relic names in 
+    adventure [a]. *)
+val relic_names : t -> relic_name list
+
+(** [room_score a r] is the score of room [r] in adventure [a]. 
+    Raises [UnknownRoom r] if [r] is not a room identifier in [a]. *)
+val room_score : t -> room_id -> int

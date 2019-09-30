@@ -3,8 +3,12 @@
     {
       "id": "the room",
       "description": "A very lonely room.",
-      "exits": []
+      "exits": [],
+      "score": 0,
+      "loot": []
     }
   ],
-  "start room": "the room"
+  "start room": "the room",
+  "relics": [],
+  "treasure room": "the room"
 }

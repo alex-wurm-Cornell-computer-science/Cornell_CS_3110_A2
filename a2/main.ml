@@ -9,24 +9,31 @@ If the command was malformed, the game will inform the player and ask
 for another command. *)
 let rec user_input _ = 
   try parse (read_line ()) with
-      | Empty -> print_string "No command was entered, please try again. \n";
+      | Empty -> print_string "\n No command was entered, please try again. \
+      \n\n";
         user_input()
-      | Malformed -> print_string "Command unclear, please try again. \n"; 
+      | Malformed -> print_string "\n Command unclear, please try again. \n\n"; 
         user_input()
 
 (** [get_adv f] converts input file f to an Adventure. If any exceptions
 are raised from the conversion, the game will notify the player and ask for
 a new file name input. *)
-let rec get_adv f = try f |> Yojson.Basic.from_file |> from_json with
-                    | _ -> print_string "Invalid adventure. Try again. \n";
-                          get_adv (read_line ())
+let rec get_adv f = 
+    if f = "quit" then (print_string "\n Goodbye! \n\n"; Stdlib.exit 0)
+    else try f |> Yojson.Basic.from_file |> from_json with
+            | _ -> print_string "Invalid adventure. Try again. \n";
+              get_adv (read_line ())
 
 (** [update_desc adv st] prints the description of the [current_room] given
 the state and the adventure being played. *)
 let update_desc adv st = 
   print_string "\n";
   st |> current_room_id |> description adv |> print_string;
-  print_string "\n"
+  print_string "\n\n"
+
+let update_score adv st = 
+  st |> current_score |> print_int;
+  print_string "\n\n"
 
 (** [revert_exit lst] takes a string list and convert it to a single string. *)
 let revert_exit lst = 
@@ -41,11 +48,14 @@ command is [Illegal] the game prints an error message and asks the user
 for a new command. *)
 let rec interp_command adv st command = 
   match command with
-  | Quit -> print_string "Thank you for playing the Adventure Game Engine! \n"
+  | Quit -> print_string "\n Thank you for playing the Adventure Game Engine! \
+   \n\n";
+  | Score -> print_string "\n Your score is : "; update_score adv st;
+             interp_command adv st (user_input ())
   | Go e -> match go (revert_exit e) adv st with 
             | Legal st' -> continue_game adv st (Legal st')
-            | Illegal -> print_string "Illegal destination. \
-              Please try again. \n"; interp_command adv st (user_input ())
+            | Illegal -> print_string "\n Illegal destination. \
+              Please try again. \n\n"; interp_command adv st (user_input ())
 
 (** [continue_game adv st result] updates the state of the game, prints the
 description, and prompts the user for another command to continue the game. *)

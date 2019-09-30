@@ -5,6 +5,7 @@ type object_phrase = string list
 type command = 
   | Go of object_phrase
   | Quit
+  | Score
 
 exception Empty
 
@@ -21,6 +22,7 @@ let format_command lst =
     | [] -> raise (Empty)
     | h :: t when h = "go" -> if t = [] then raise (Malformed) else Go t
     | h :: t when h = "quit" -> if t = [] then Quit else raise (Malformed) 
+    | h :: t when h = "score" -> if t = [] then Score else raise (Malformed)
     | _ -> raise (Malformed)
 
 let parse str =

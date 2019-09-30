@@ -31,6 +31,11 @@ val current_room_id : t -> string
     current room location is or has ever been [rm]. *)
 val visited : t -> string list
 
+(** [current_score st] is the player's score at the time the command is issued.
+ The adventurer's score increases each time they visit a new room or 
+ bring an item to the treasure room. *)
+val current_score : t -> int
+
 (** The type representing the result of an attempted movement. *)
 type result = Legal of t | Illegal
 

@@ -29,21 +29,67 @@
                 "room id"
               ]
             }
-          }
+          },
+          "score": {
+              "type": "integer"
+          },
+          "loot": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "relic name": {
+                  "type": "string"
+                },
+                "points": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "relic name",
+                "points"
+              ]
+            }
+          }    
         },
         "required": [
           "id",
           "description",
-          "exits"
+          "exits",
+          "score",
+          "loot"
         ]
-      },
+      }
     },
     "start room": {
       "type": "string"
     },
+    "relics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "relic name": {
+            "type": "string"
+          },
+          "points": {
+            "type": "integer"
+          }
+        },
+        "required":  [
+          "relic name",
+          "points"
+        ]  
+      }
+    },
+    "treasure room": {
+      "type": "string"
+    }
   },
   "required": [
     "rooms",
-    "start room"
+    "start room",
+    "relics",
+    "treasure room"
   ]
 }
