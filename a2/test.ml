@@ -132,6 +132,7 @@ let fake_room : room_id = "fake room"
 let fake_exit : exit_name = "fake exit"
 let lonely_room = from_json (Yojson.Basic.from_file "lonely_room.json")
 let ho_plaza = from_json (Yojson.Basic.from_file "ho_plaza.json")
+let olin_hall = from_json (Yojson.Basic.from_file "olin_hall.json")
 
 let adventure_tests =
   [
@@ -323,11 +324,38 @@ let state_tests =
       |> update_state ho_plaza_init) "ho plaza" ["health"; "ho plaza"];
   ]
 
+let more_tests = 
+  [
+    "room_state of ho_plaza 'ho plaza' should be ('ho plaza', ['quarter card'])"
+    >:: (fun _ -> assert_equal ("ho plaza", ["quarter card"]) 
+                  (state_of_room ho_plaza "ho plaza"));
+
+    "get_room_states [] ho_plaza ho_plaza.rooms should be
+    [('ho plaza', ['quarter card']), ('health', ['stethoscope']), 
+    ('tower', ['lost wallet']), ('nirvana', [])]" >::
+    (fun _ -> assert_equal ([("ho plaza", ["quarter card"]); 
+    ("health", ["stethoscope"]); ("tower", ["lost wallet"]); ("nirvana", [])])
+    (get_room_states [] ho_plaza (room_ids ho_plaza)));
+
+  "'quarter card' is in initial ho_plaza room_information" >:: 
+  (fun _ -> assert_equal false (ho_plaza 
+                              |> init_state
+                              |> current_room_info
+                              |> List.mem_assoc "quarter card"));
+
+  "total items of 'ho plaza' is 3" >:: 
+  (fun _ -> assert_equal 3 (ho_plaza |> total_items));
+  "total items of 'ho plaza' is 13" >:: 
+  (fun _ -> assert_equal 13 (olin_hall |> total_items));
+  ]
+
 let suite =
   "test suite for A2"  >::: List.flatten [
     adventure_tests;
     command_tests;
     state_tests;
+    more_tests;
   ]
 
 let _ = run_test_tt_main suite
+

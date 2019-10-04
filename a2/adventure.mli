@@ -14,9 +14,6 @@
  * submission.
 *)
 
-(** The abstract type of values representing adventures. *)
-type t
-
 (** The type of room identifiers. *)
 type room_id = string
 
@@ -26,14 +23,37 @@ type exit_name = string
 (**The type of relic names. *)
 type relic_name = string
 
+(** The abstract type of values representing adventures. *)
+type exit = {
+  name : exit_name;
+  room_id : room_id;
+}
+
+type relic = {
+  relic_name : relic_name;
+  points : int;
+}
+
+type room = {
+  id : room_id;
+  description : string;
+  exits : exit list;
+  score : int;
+  loot : relic list;
+}
+
+type t = {
+  rooms : room list;
+  start_room : room_id;
+  relics : relic list;
+  treasure_room : room_id;
+}
+
 (** Raised when an unknown room is encountered. *)
 exception UnknownRoom of room_id
 
 (** Raised when an unknown exit is encountered. *)
 exception UnknownExit of exit_name
-
-(** Raised when an unknown relic is encountered. *)
-exception UnknownRelic of relic_name
 
 (** [from_json j] is the adventure that [j] represents.
     Requires: [j] is a valid JSON adventure representation. *)
@@ -76,10 +96,26 @@ val next_rooms : t -> room_id -> room_id list
 [a]. *)
 val treasure_room : t -> room_id
 
-(** [relic)names a] is a set-like list of all of the relic names in 
-    adventure [a]. *)
-val relic_names : t -> relic_name list
-
 (** [room_score a r] is the score of room [r] in adventure [a]. 
     Raises [UnknownRoom r] if [r] is not a room identifier in [a]. *)
 val room_score : t -> room_id -> int
+
+(** [list_relic_names room] is the set-like list of all of the [relic-names]
+of the [loot] in [room]. *)
+val list_relic_names : room -> relic_name list
+
+(** [relic_names a] is a set-like list of all of the relic names in 
+    adventure [a]. *)
+val relic_names : t -> room_id -> relic_name list
+
+(** [state_of_room adv room] is the tuple [(room, room_relics)] where 
+[room_relics] is the list [loot] of [relics] in [room]. *)
+val state_of_room : t -> room_id -> (room_id * relic_name list)
+
+(** [relic_points adv rel] is the point value attributed with the relic named
+[rel] in adventure [adv]. *)
+val relic_points : t -> relic_name -> int
+
+(** [room physical adv code] is the actual room identified by the 
+[room_id] [code]. *)
+val room_physical : t -> room_id -> room

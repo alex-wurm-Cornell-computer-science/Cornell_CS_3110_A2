@@ -1,0 +1,282 @@
+{
+	"rooms": [
+		{
+			"id": "rhodes lounge",
+			"description": "You are in Rhodes Lounge. The kitchen is to your right. You are hiding from the chemical engineering students.",
+			"exits": [
+				{
+					"name": "right",
+					"room id": "kitchen"
+				},
+				{
+					"name": "out",
+					"room id": "kitchen"
+				},
+				{
+					"name": "food",
+					"room id": "kitchen"
+				}
+			],
+			"score": 0,
+			"loot": [
+				{
+					"relic name": "glasses",
+					"points": 1
+				}
+			]
+		},
+		{
+			"id": "kitchen",
+			"description": "You are in the kitchen. The refrigerator is full of food. The door to the hallway is open in front of you. You hear students rushing between classes.",
+			"exits": [
+				{
+					"name": "back",
+					"room id": "rhodes lounge"
+				},
+				{
+					"name": "lounge",
+					"room id": "rhodes lounge"
+				},
+				{
+					"name": "Rhodes Lounge",
+					"room id": "rhodes lounge"
+				},
+				{
+					"name": "fridge",
+					"room id": "refrigerator"
+				},
+				{
+					"name": "freezer",
+					"room id": "refrigerator"
+				},
+				{
+					"name": "eat",
+					"room id": "refrigerator"
+				},
+				{
+					"name": "drink",
+					"room id": "refrigerator"
+				},
+				{
+					"name": "hall",
+					"room id": "hallway"
+				},
+				{
+					"name": "forward",
+					"room id": "hallway"
+				},
+				{
+					"name": "outside",
+					"room id": "hallway"
+				},
+				{
+					"name": "door",
+					"room id": "hallway"
+				}
+			],
+			"score": 8,
+			"loot": [
+				{
+					"relic name": "lunch box",
+					"points": 12
+        },
+        {
+					"relic name": "yogurt",
+					"points": 2
+        },
+        {
+					"relic name": "apple juice",
+					"points": 2
+        },
+        {
+					"relic name": "ketchup",
+					"points": 2
+        },
+        {
+					"relic name": "sandwich",
+					"points": 2
+        },
+        {
+					"relic name": "milk",
+					"points": 2
+        },
+        {
+					"relic name": "cheese",
+					"points": 2
+        },
+        {
+					"relic name": "bacon",
+					"points": 2
+				}
+			]
+		},
+		{
+			"id": "refrigerator",
+			"description": "You reached for a snack and an arm pulled you into the fridge. You now find yourself in an icy wasteland with no way of escape.",
+			"exits": [],
+			"score": 80,
+			"loot": []
+		},
+		{
+			"id": "hallway",
+			"description": "You find yourself surrounded by crying engineers. The noise is overwhelming. Down the hall you see a stairwell and the undegraduate laboratory near the safety shower.",
+			"exits": [
+				{
+					"name": "back",
+					"room id": "kitchen"
+				},
+				{
+					"name": "food",
+					"room id": "kitchen"
+				},
+				{
+					"name": "hide",
+					"room id": "kitchen"
+				},
+				{
+					"name": "kitchen",
+					"room id": "kitchen"
+				},
+				{
+					"name": "lab",
+					"room id": "undergraduate lab"
+				},
+				{
+					"name": "experiment",
+					"room id": "undergraduate lab"
+				},
+				{
+					"name": "safety shower",
+					"room id": "undergraduate lab"
+				},
+				{
+					"name": "undergrad lab",
+					"room id": "undergraduate lab"
+        },
+				{
+					"name": "stairs",
+					"room id": "stairwell"
+				},
+				{
+					"name": "stairway",
+					"room id": "stairwell"
+				},
+				{
+					"name": "staircase",
+					"room id": "stairwell"
+        },
+				{
+					"name": "upstairs",
+					"room id": "stairwell"
+				},
+				{
+					"name": "downstairs",
+					"room id": "stairwell"
+				}
+			],
+			"score": 6,
+			"loot": [
+				{
+					"relic name": "failed exam",
+					"points": 25
+				}
+			]
+    },
+    {
+			"id": "undergraduate lab",
+			"description": "All around you are large machines. You put on your safety equipment and venture over to the fume hood. This is a good place to hide for a while.",
+			"exits": [
+				{
+					"name": "back",
+					"room id": "hallway"
+				},
+				{
+					"name": "hall",
+					"room id": "hallway"
+				},
+				{
+					"name": "out",
+					"room id": "hallway"
+				}
+			],
+			"score": 12,
+			"loot": [
+				{
+					"relic name": "test tube",
+					"points": 13
+        },
+        {
+					"relic name": "weigh boat",
+					"points": 4
+        },
+        {
+					"relic name": "safety goggles",
+					"points": 18
+				}
+			]
+    },
+    {
+			"id": "stairwell",
+			"description": "Olin Hall is under construction. Loose floor tiles cause you to slip and fall down the stairs. You can't get back up.",
+			"exits": [],
+			"score": 1,
+			"loot": []
+		}
+	],
+	"start room": "rhodes lounge",
+	"relics": [
+    {
+      "relic name": "glasses",
+      "points": 1
+    },
+    {
+      "relic name": "lunch box",
+      "points": 12
+    },
+    {
+      "relic name": "yogurt",
+      "points": 2
+    },
+    {
+      "relic name": "apple juice",
+      "points": 2
+    },
+    {
+      "relic name": "ketchup",
+      "points": 2
+    },
+    {
+      "relic name": "sandwich",
+      "points": 2
+    },
+    {
+      "relic name": "milk",
+      "points": 2
+    },
+    {
+      "relic name": "cheese",
+      "points": 2
+    },
+    {
+      "relic name": "bacon",
+      "points": 2
+    },
+    {
+      "relic name": "failed exam",
+      "points": 25
+    },
+    {
+      "relic name": "test tube",
+      "points": 13
+    },
+    {
+      "relic name": "weigh boat",
+      "points": 4
+    },
+    {
+      "relic name": "safety goggles",
+      "points": 18
+    }
+	],
+	"treasure room": "undergraduate lab"
+}

@@ -30,6 +30,10 @@ type command =
   | Go of object_phrase
   | Quit
   | Score
+  | Take of object_phrase
+  | Drop of object_phrase
+  | Inventory
+  | Loot
 
 (** Raised when an empty command is parsed. *)
 exception Empty
@@ -50,9 +54,15 @@ exception Malformed
     Raises: [Empty] if [str] is the empty string or contains only spaces. 
 
     Raises: [Malformed] if the command is malformed. A command
-    is {i malformed} if the verb is neither "quit" nor "go",
+    is {i malformed} if the verb is not "quit", "go" "take", "drop",
+    "inventory", "score", or "loot"
     or if the verb is "quit" and there is a non-empty object phrase,
-    or if the verb is "go" and there is an empty object phrase.*)
+    or if the verb is "go" and there is an empty object phrase.
+    or if the verb is "score" and there is a non-empty object phrase
+    or if the verb is "loot" and there is a non-empty object phrase
+    or if the verb is "inventory" and there is a non-empty object phrase
+    or if the verb is "take" and there is an empty object phrase
+    or if the verb is "drop" and there is an empty object phrase *)
 val parse : string -> command
 
 (* END DO NOT CHANGE

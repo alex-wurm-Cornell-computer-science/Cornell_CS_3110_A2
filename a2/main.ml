@@ -22,16 +22,31 @@ let rec get_adv f =
     if f = "quit" then (print_string "\n Goodbye! \n\n"; Stdlib.exit 0)
     else try f |> Yojson.Basic.from_file |> from_json with
             | _ -> print_string "Invalid adventure. Try again. \n";
-              get_adv (read_line ())
+              get_adv (read_line ())  
+
+(** [update_items adv st] prints the loot of the [current_room] given
+the state and the adventure being played. If there is no loot in the [room]
+the function will let the player know. *)
+let rec update_items adv st =
+  let rels = List.assoc (current_room_id st) (current_room_info st) in
+  match rels with 
+    | [] -> print_string "There are no items in this room. \n";
+    | _ -> print_string "You see the following items in this room: \n"; 
+           List.iter print_endline rels
 
 (** [update_desc adv st] prints the description of the [current_room] given
-the state and the adventure being played. *)
+the state and the adventure being played. This function also prints the 
+loot found in [current_room] given [st]. *)
 let update_desc adv st = 
   print_string "\n";
   st |> current_room_id |> description adv |> print_string;
-  print_string "\n\n"
+  print_string "\n\n";
+  update_items adv st;
+  print_string "\n"
 
-let update_score adv st = 
+(**[update_score st] prints the score of the player given the current state
+[st]. *)
+let update_score st = 
   st |> current_score |> print_int;
   print_string "\n\n"
 
@@ -39,6 +54,16 @@ let update_score adv st =
 let revert_exit lst = 
   let new_str = List.fold_left (fun p n -> p ^ " " ^ n) "" lst in
   String.trim new_str
+
+let disp_inv st =
+  print_string "\n"; 
+  List.iter print_endline (st |> current_inventory);
+  print_string "\n"
+
+let disp_items st =
+  print_string "\n";
+  st |> current_room_loot |> List.iter print_endline;
+  print_string "\n"
 
 (** [interp_command adv st command] allows the user to play the game by
 printing an exit message if the input command is [Quit] or by inspecting a 
@@ -49,20 +74,51 @@ for a new command. *)
 let rec interp_command adv st command = 
   match command with
   | Quit -> print_string "\n Thank you for playing the Adventure Game Engine! \
-   \n\n";
-  | Score -> print_string "\n Your score is : "; update_score adv st;
+   \n\n"; exit 0
+  | Score -> print_string "\n Your score is: "; update_score st;
              interp_command adv st (user_input ())
-  | Go e -> match go (revert_exit e) adv st with 
-            | Legal st' -> continue_game adv st (Legal st')
+  | Inventory -> print_string "\n Your inventory contains the following: \n";
+                 disp_inv st; interp_command adv st (user_input ())
+  | Loot -> print_string "\n This room contains the following items: \n";
+            (disp_items st); 
+            interp_command adv st (user_input ())               
+  | Take i -> (let r = revert_exit i in
+              match take_item st r with
+              | Legal st' -> print_string "\n Item was taken. \n \n";
+                continue_game_item adv st (Legal st')
+              | Illegal -> print_string "\n Item could not be found. \n \n";
+              interp_command adv st (user_input ())
+              | Win -> print_string "\n You seem to have won the game ... but
+              I suspect you may have cheated \n"; 
+              interp_command adv st (user_input ()))
+  | Drop i -> (let r = revert_exit i in
+              match drop_item adv st r  with
+              | Win -> print_string "\n Congratulations! You brought all \
+              items to the treasure room! Well done! \n \n";
+              print_string "You finished with a score of:"; 
+              update_score st;
+              exit 0
+              | Legal st' -> print_string "\n Item was dropped. \n \n"; 
+              continue_game_item adv st (Legal st')
+              | Illegal -> print_string "\n You do not have this item. \n \n";
+              interp_command adv st (user_input ()))
+  | Go e -> (match go (revert_exit e) adv st with 
+            | Legal st' -> continue_game_go adv st (Legal st')
             | Illegal -> print_string "\n Illegal destination. \
               Please try again. \n\n"; interp_command adv st (user_input ())
-
+            | Win -> print_string "\n You seem to have won the game ... but
+              I suspect you may have cheated \n"; 
+              interp_command adv st (user_input ()))
+  
 (** [continue_game adv st result] updates the state of the game, prints the
 description, and prompts the user for another command to continue the game. *)
-and continue_game adv st result =
+and continue_game_go adv st result =
   let st' = update_state st result in
   update_desc adv st';
   interp_command adv st' (user_input ())
+and continue_game_item adv st result =
+  let st' = update_state st result in
+  interp_command adv st' (user_input())
  
 (** [play_game f] starts the adventure in file [f]. *)
 let play_game f =

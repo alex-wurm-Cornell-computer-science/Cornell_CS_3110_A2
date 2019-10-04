@@ -6,7 +6,6 @@ type exit_name = string
 type relic_name = string
 exception UnknownRoom of room_id
 exception UnknownExit of exit_name
-exception UnknownRelic of relic_name
 
 type exit = {
   name : exit_name;
@@ -144,6 +143,12 @@ let next_rooms adv room =
 
 let treasure_room adv = adv.treasure_room
 
+(** [get_score room] is the [score] of [room]. *)
+let get_score room = room.score
+
+let room_score adv room = 
+  room_func adv room get_score
+
 (** [get_relics acc (relic_list : relic list)] is the list of [relic_names]
 of all of the [relics] in [relic_list]. *)
 let rec get_relics acc (relic_list : relic list) =
@@ -151,10 +156,28 @@ let rec get_relics acc (relic_list : relic list) =
     | [] -> acc
     | h::t -> get_relics (h.relic_name :: acc) t
 
-let relic_names adv = get_relics [] adv.relics
+(** [all_relics adv] is the list of all of the items in the adventure
+[adv]. *)
+let all_relics adv = get_relics [] adv.relics
 
-(** [get_score room] is the [score] of [room]. *)
-let get_score room = room.score
+(** [room_loot room] is the list of all of the items in the room [room]. *)
+let room_loot room = room.loot
 
-let room_score adv room = 
-  room_func adv room get_score
+let list_relic_names room =
+  room |> room_loot |> get_relics [] |> List.sort_uniq compare
+
+let relic_names adv room =
+  room_func adv room list_relic_names
+
+let state_of_room adv room =
+  let room_relics = adv.rooms 
+                    |> List.find (fun {id} -> id = room) 
+                    |> list_relic_names in
+  (room, room_relics)
+
+let relic_points adv rel = 
+  let item = List.find (fun {relic_name} -> relic_name = rel) adv.relics in
+  item.points
+
+let room_physical adv code =
+  List.find (fun {id} -> id = code) adv.rooms

@@ -15,6 +15,7 @@
 *)
 
 (** The abstract type of values representing the game state. *)
+type room_state = string * string list
 type t 
 
 (** [init_state a] is the initial state of the game when playing adventure [a]. 
@@ -36,8 +37,18 @@ val visited : t -> string list
  bring an item to the treasure room. *)
 val current_score : t -> int
 
+(** [current_inventory st] is the list of the items in the player's [inventory] 
+at the time the command is issued. The adventurer's inventory changes each time
+they [Take] or [Drop] an item. *)
+val current_inventory : t -> Adventure.relic_name list
+
+
+(** [current_room_info st] is the list of tuples of [room_ids] and 
+[relic_name lists] representing the [room_states] of [st]. *)
+val current_room_info : t -> room_state list
+
 (** The type representing the result of an attempted movement. *)
-type result = Legal of t | Illegal
+type result = Legal of t | Illegal | Win
 
 (** [go exit adv st] is [r] if attempting to go through exit [exit] in state 
     [st] and adventure [adv] results in [r].  If [exit] is an exit from the 
@@ -56,3 +67,26 @@ val go : Adventure.exit_name -> Adventure.t -> t -> result
 If the command is [Illegal] then the previous state is returned. If the 
 comamnd is [Legal t] the new state [t] is returned. *)
 val update_state : t -> result -> t
+
+(** [take_item st rel] is the result of trying to take the relic [rel]
+from the [current_room] in [st]. *)
+val take_item : t -> Adventure.relic_name -> result
+
+(** [drop_item adv st rel] is the result of trying to drop the 
+relic [rel] into the [current_room] in [st]. *)
+val drop_item : Adventure.t -> t -> Adventure.relic_name -> result
+
+(* For Testing *)
+
+(** [get_room_states acc adv (room_list : room_id list)] is the list of
+[room_states] as tuples of all of the [rooms] in [adv]. *)
+val get_room_states : room_state list -> Adventure.t -> 
+Adventure.room_id list -> room_state list
+
+(** [current_room_loot st] is the list of [relic_names] in 
+[loot] of the current room. *)
+val current_room_loot : t -> Adventure.relic_name list
+
+val string_from_list : string list -> string list list -> string list
+
+val total_items : Adventure.t -> int

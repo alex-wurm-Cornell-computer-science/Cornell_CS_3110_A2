@@ -1,0 +1,256 @@
+{
+	"rooms": [
+		{
+			"id": "college ave",
+			"description": "You are on College Ave. It is late at night but some stores and restaurants are still open.",
+			"exits": [
+				{
+					"name": "CTP",
+					"room id": "collegetown pizza"
+				},
+				{
+					"name": "pizza",
+					"room id": "collegetown pizza"
+				},
+				{
+					"name": "ctp",
+					"room id": "collegetown pizza"
+        },
+        {
+					"name": "Wings Over Ithaca",
+					"room id": "wings over"
+				},
+				{
+					"name": "Wings Over",
+					"room id": "wings over"
+				},
+				{
+					"name": "Wings",
+					"room id": "wings over"
+        },{
+					"name": "wings",
+					"room id": "wings over"
+				},
+				{
+					"name": "cookies",
+					"room id": "insomnia cookies"
+				},
+				{
+					"name": "Insomnia",
+					"room id": "insomnia cookies"
+        },
+        {
+					"name": "Insomnia Cookies",
+					"room id": "insomnia cookies"
+				},
+				{
+					"name": "insomnia",
+					"room id": "insomnia cookies"
+				},
+				{
+					"name": "bar",
+					"room id": "rulloff's"
+        },
+        {
+					"name": "rulloffs",
+					"room id": "rulloff's"
+				},
+				{
+					"name": "Rulloffs",
+					"room id": "rulloff's"
+				},
+				{
+					"name": "Rulloff's",
+					"room id": "rulloff's"
+        }
+			],
+			"score": 0,
+			"loot": []
+		},
+		{
+			"id": "collegetown pizza",
+			"description": "You enter Collegetown Pizza. You can sense the grease in the air. The line is very long.",
+			"exits": [
+				{
+					"name": "back",
+					"room id": "college ave"
+				},
+				{
+					"name": "out",
+					"room id": "college ave"
+				},
+				{
+					"name": "College Ave",
+					"room id": "college ave"
+				},
+				{
+					"name": "restroom",
+					"room id": "bathroom"
+				},
+				{
+					"name": "pee",
+					"room id": "bathroom"
+				},
+				{
+					"name": "vomit",
+					"room id": "bathroom"
+				}
+			],
+			"score": 21,
+			"loot": [
+				{
+					"relic name": "pepperoni",
+					"points": 8
+        },
+        {
+					"relic name": "garlic",
+					"points": 12
+        }
+			]
+		},
+		{
+			"id": "bathroom",
+			"description": "You stumble into the bathroom of CTP. The smell is horrible. You'll be here for a while.",
+			"exits": [
+        {
+					"name": "back",
+					"room id": "collegetown pizza"
+        },
+        {
+					"name": "out",
+					"room id": "collegetown pizza"
+				}
+      ],
+			"score": 45,
+			"loot": [ 
+        {
+        "relic name": "plunger",
+        "points": 50
+        }
+      ]
+		},
+		{
+			"id": "wings over",
+			"description": "You walk into Wings Over. Everyone is drunk and covered in Honey BBQ.",
+			"exits": [
+				{
+					"name": "back",
+					"room id": "college ave"
+				},
+				{
+					"name": "out",
+					"room id": "college ave"
+				},
+				{
+					"name": "street",
+					"room id": "college ave"
+        },
+        {
+					"name": "College Ave",
+					"room id": "college ave"
+				}
+			],
+			"score": 18,
+			"loot": [
+				{
+					"relic name": "ranch",
+					"points": 17
+				}
+			]
+    },
+    {
+			"id": "insomnia cookies",
+			"description": "You waltz into insomnia cookies eager to eat an entire cookie-cake by yourself. The cashier looks at you with disgust.",
+			"exits": [
+				{
+					"name": "back",
+					"room id": "college ave"
+				},
+				{
+					"name": "out",
+					"room id": "street"
+				},
+				{
+					"name": "street",
+					"room id": "college ave"
+        },
+        {
+					"name": "College Ave",
+					"room id": "college ave"
+				}
+			],
+			"score": 30,
+			"loot": [
+				{
+					"relic name": "cookies",
+					"points": 40
+        }
+			]
+    },
+    {
+			"id": "rulloff's",
+			"description": "You see some of your friends in Rulloff's so you head inside. The bartender serves you a drink and you sit down.",
+			"exits": [
+        {
+					"name": "back",
+					"room id": "college ave"
+				},
+				{
+					"name": "out",
+					"room id": "street"
+				},
+				{
+					"name": "street",
+					"room id": "college ave"
+        },
+        {
+					"name": "College Ave",
+					"room id": "college ave"
+				}
+      ],
+			"score": 25,
+			"loot": [
+        {
+					"relic name": "beer",
+					"points": 10
+        },
+        {
+					"relic name": "shot glass",
+					"points": 33
+        }
+      ]
+		}
+	],
+	"start room": "college ave",
+	"relics": [
+    {
+      "relic name": "pepperoni",
+      "points": 8
+    },
+    {
+      "relic name": "garlic",
+      "points": 12
+    },
+    {
+      "relic name": "plunger",
+      "points": 50
+    },
+    {
+      "relic name": "ranch",
+      "points": 17
+    },
+    {
+      "relic name": "cookies",
+      "points": 40
+    },
+    {
+      "relic name": "beer",
+      "points": 10
+    },
+    {
+      "relic name": "shot glass",
+      "points": 33
+    }
+	],
+	"treasure room": "bathroom"
+}
