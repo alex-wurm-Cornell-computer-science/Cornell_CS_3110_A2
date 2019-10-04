@@ -18,9 +18,9 @@ exception Malformed
 
 (** [format_command lst] takes a list of strings and raises an [Empty] 
   exception if the list is nil. If the list of strings represents
-  a properly formed command - one of the following: "go" followed by a room_id,
-  "quit", "score", "take" followed by a [relic_name], "drop" followed by a
-  [relic_name] inventory", or "loot" - [format_command lst] returns the verb &
+  a properly formed command - one of the following: 'go' followed by a room_id,
+  'quit', 'score', 'take' followed by a [relic_name], 'drop' followed by a
+  [relic_name] 'inventory', or 'loot' - [format_command lst] returns the verb &
   object_phrase. If the command is not properly formed, [format_command lst] 
   raises a [Malformed] exception. *)
 let format_command lst =

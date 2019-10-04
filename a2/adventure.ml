@@ -178,6 +178,3 @@ let state_of_room adv room =
 let relic_points adv rel = 
   let item = List.find (fun {relic_name} -> relic_name = rel) adv.relics in
   item.points
-
-let room_physical adv code =
-  List.find (fun {id} -> id = code) adv.rooms

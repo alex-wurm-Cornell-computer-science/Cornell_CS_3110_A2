@@ -5,6 +5,7 @@ exception UnknownRelic of relic_name
 
 type room_state = room_id * relic_name list
 
+(** The abstract type of values representing states. *)
 type t = {
   current_room : room_id;
   visited_rooms : room_id list;
@@ -164,6 +165,8 @@ let take_item st rel =
   if new_inv = st.inventory then Illegal
   else Legal st'
 
+(** [from_inv_to_room adv st rel] is the result of the player attempting to
+drop [rel] given [st]. *)
 let from_inv_to_room adv st rel = 
 
   let inventory_relic = try List.find (fun x -> x = rel) st.inventory with

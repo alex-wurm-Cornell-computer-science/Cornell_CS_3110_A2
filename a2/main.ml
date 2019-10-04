@@ -55,11 +55,13 @@ let revert_exit lst =
   let new_str = List.fold_left (fun p n -> p ^ " " ^ n) "" lst in
   String.trim new_str
 
+(** [disp_inv st] prints the player's current [inventory]. *)
 let disp_inv st =
   print_string "\n"; 
   List.iter print_endline (st |> current_inventory);
   print_string "\n"
 
+(** [disp_items st] prints the [loot] of the current room. *)
 let disp_items st =
   print_string "\n";
   st |> current_room_loot |> List.iter print_endline;
@@ -102,13 +104,18 @@ let rec interp_command adv st command =
               continue_game_item adv st (Legal st')
               | Illegal -> print_string "\n You do not have this item. \n \n";
               interp_command adv st (user_input ()))
-  | Go e -> (match go (revert_exit e) adv st with 
-            | Legal st' -> continue_game_go adv st (Legal st')
-            | Illegal -> print_string "\n Illegal destination. \
-              Please try again. \n\n"; interp_command adv st (user_input ())
-            | Win -> print_string "\n You seem to have won the game ... but
-              I suspect you may have cheated \n"; 
-              interp_command adv st (user_input ()))
+  | Go e -> (try (match go (revert_exit e) adv st with 
+                    | Legal st' -> continue_game_go adv st (Legal st')
+                    | Illegal -> print_string "\n Illegal destination. \
+                    Please try again. \n\n"; 
+                    interp_command adv st (user_input ())
+                    | Win -> print_string "\n You seem to have won the game... \
+                    but I suspect you may have cheated \n"; 
+                    interp_command adv st (user_input ())) 
+              with
+                | UnknownRoom e -> print_string "The room you are trying \
+                  to access does not exist in this adventure. Please check
+                  your json file form correct room_ids.";) 
   
 (** [continue_game adv st result] updates the state of the game, prints the
 description, and prompts the user for another command to continue the game. *)

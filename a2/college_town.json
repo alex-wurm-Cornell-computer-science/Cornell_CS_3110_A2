@@ -82,7 +82,11 @@
 				{
 					"name": "College Ave",
 					"room id": "college ave"
-				},
+        },
+        {
+					"name": "street",
+					"room id": "college ave"
+        },
 				{
 					"name": "restroom",
 					"room id": "bathroom"
@@ -168,7 +172,7 @@
 				},
 				{
 					"name": "out",
-					"room id": "street"
+					"room id": "college ave"
 				},
 				{
 					"name": "street",
@@ -197,7 +201,7 @@
 				},
 				{
 					"name": "out",
-					"room id": "street"
+					"room id": "college ave"
 				},
 				{
 					"name": "street",

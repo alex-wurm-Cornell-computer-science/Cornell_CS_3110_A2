@@ -20,20 +20,22 @@ type room_id = string
 (** The type of exit names. *)
 type exit_name = string
 
-(**The type of relic names. *)
+(** The type of relic names. *)
 type relic_name = string
 
-(** The abstract type of values representing adventures. *)
+(** The abstract type of values representing exits. *)
 type exit = {
   name : exit_name;
   room_id : room_id;
 }
 
+(** The abstract type of values representing relics. *)
 type relic = {
   relic_name : relic_name;
   points : int;
 }
 
+(** The abstract type of values representing rooms. *)
 type room = {
   id : room_id;
   description : string;
@@ -42,6 +44,7 @@ type room = {
   loot : relic list;
 }
 
+(** The abstract type of values representing adventures. *)
 type t = {
   rooms : room list;
   start_room : room_id;
@@ -115,7 +118,3 @@ val state_of_room : t -> room_id -> (room_id * relic_name list)
 (** [relic_points adv rel] is the point value attributed with the relic named
 [rel] in adventure [adv]. *)
 val relic_points : t -> relic_name -> int
-
-(** [room physical adv code] is the actual room identified by the 
-[room_id] [code]. *)
-val room_physical : t -> room_id -> room

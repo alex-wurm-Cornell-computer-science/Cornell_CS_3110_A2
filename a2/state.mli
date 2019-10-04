@@ -14,8 +14,10 @@
  * submission.
 *)
 
-(** The abstract type of values representing the game state. *)
+(** The type representing room states. *)
 type room_state = string * string list
+
+(** The abstract type of values representing the game state. *)
 type t 
 
 (** [init_state a] is the initial state of the game when playing adventure [a]. 
@@ -47,7 +49,7 @@ val current_inventory : t -> Adventure.relic_name list
 [relic_name lists] representing the [room_states] of [st]. *)
 val current_room_info : t -> room_state list
 
-(** The type representing the result of an attempted movement. *)
+(** The type representing the result of an attempted action. *)
 type result = Legal of t | Illegal | Win
 
 (** [go exit adv st] is [r] if attempting to go through exit [exit] in state 
@@ -87,6 +89,10 @@ Adventure.room_id list -> room_state list
 [loot] of the current room. *)
 val current_room_loot : t -> Adventure.relic_name list
 
+(** [string_from_list acc lst] takes a list containing string lists
+and returns a single list of all of the sub-strings. *)
 val string_from_list : string list -> string list list -> string list
 
+(** [total_items adv] is the total number of items in the initiae state
+generated for [adv]. *)
 val total_items : Adventure.t -> int
